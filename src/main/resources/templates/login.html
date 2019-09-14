@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div class="container">
+
+    <div class="row" style="margin-top:20px">
+        <div>
+            <form th:action="@{/login}" method="post">
+                <fieldset>
+                    <h1>Please Sign In</h1>
+
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">
+                            Invalid username and password.
+                        </div>
+                    </div>
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info">
+                            You have been logged out.
+                        </div>
+                    </div>
+                    <form th:action="@{/login}" th:object="${user}" method="post">
+                        <div class="form-group">
+                            UserName: <input type="text" name="username" id="username" class="form-control"
+                                   required="true" autofocus="true" th:field="*{userName}"/>
+                        </div>
+                        <div class="form-group">
+                           Password: <input type="password" name="password" id="password" class="form-control"
+                                   required="true" th:field="*{password}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <img src="getCaptcha.jpg" id="captcha"/>
+
+                            <a href="#" onclick="document.getElementById('captcha').src='getCaptcha.jpg'">
+                                <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+
+                            <input type="text" name="captcha" th:field="*{captcha}"/>
+                        </div>
+                    </form>
+                    <div>
+                        <div>
+                            <input type="submit" class="btn btn-lg btn-primary" value="Sign In"/>
+                            <input type="reset" class="btn btn-lg btn-primary" value="Reset"/>
+
+                        </div>
+                        <div>
+                            New user? <a th:href="@{/registration}">Register Here</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>
